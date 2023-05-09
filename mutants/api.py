@@ -21,9 +21,9 @@ class PersonViewSet(viewsets.ModelViewSet):
             serializer.validate_dna(request.data.get('dna', []))
             instance = serializer.create(serializer.validated_data)
             if instance.is_mutant:
-                response = Response(serializer.data, status=status.HTTP_200_OK)
+                response = Response({'message': 'Person create, is mutant'}, status=status.HTTP_200_OK)
             else:
-                response = Response(instance.data, status=status.HTTP_403_FORBIDDEN)
+                response = Response({'message': 'Person create, is not mutant'}, status=status.HTTP_403_FORBIDDEN)
         except Exception as e:
             message = {'message': str(e)}
             response = Response(message, status=status.HTTP_400_BAD_REQUEST)
