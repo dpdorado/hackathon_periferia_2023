@@ -15,6 +15,7 @@ class Person(models.Model):
     @staticmethod
     def isMutant(cadenas):
         n = len(cadenas)
+        
         for i in range(n):
             if(re.search(r'(.)\1{3}', cadenas[i])):
                 return True
@@ -25,6 +26,11 @@ class Person(models.Model):
                 if i < n-3 and j >= 3:
                     if len(set(cadenas[i+k][j-k] for k in range(4))) == 1:
                         return True
+                    
+        matriz_transpuesta = "\n".join("".join(columna) for columna in zip(*cadenas))
+        if re.search(r'(.)\1{3}', matriz_transpuesta):
+            return True
+
         return False
     
 class Stats(models.Model):
